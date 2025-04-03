@@ -1,0 +1,175 @@
+{
+  "appointments": [
+    {
+      "id": 1,
+      "status": "upcoming",
+      "patientId": 12345,
+      "doctor": {
+        "id": 101,
+        "name": "Dr. Ahmet Yılmaz",
+        "specialty": "Kardiyoloji"
+      },
+      "hospital": {
+        "id": 201,
+        "name": "Ankara Şehir Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2025-04-01T14:30:00Z",
+      "appointmentDate": "2025-04-10T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "status": "upcoming",
+      "patientId": 12345,
+      "doctor": {
+        "id": 102,
+        "name": "Dr. Elif Demir",
+        "specialty": "Dahiliye"
+      },
+      "hospital": {
+        "id": 202,
+        "name": "Gazi Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2025-04-02T09:15:00Z",
+      "appointmentDate": "2025-04-15T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "status": "upcoming",
+      "patientId": 12345,
+      "doctor": {
+        "id": 103,
+        "name": "Dr. Mehmet Kaya",
+        "specialty": "Ortopedi"
+      },
+      "hospital": {
+        "id": 203,
+        "name": "Hacettepe Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2025-04-03T11:45:00Z",
+      "appointmentDate": "2025-04-20T16:00:00Z"
+    },
+    {
+      "id": 4,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 104,
+        "name": "Dr. Ayşe Arslan",
+        "specialty": "Göz Hastalıkları"
+      },
+      "hospital": {
+        "id": 201,
+        "name": "Ankara Şehir Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2025-02-20T10:30:00Z",
+      "appointmentDate": "2025-03-05T11:00:00Z"
+    },
+    {
+      "id": 5,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 105,
+        "name": "Dr. Selim Can",
+        "specialty": "Dermatoloji"
+      },
+      "hospital": {
+        "id": 202,
+        "name": "Gazi Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2025-01-10T08:00:00Z",
+      "appointmentDate": "2025-02-25T09:30:00Z"
+    },
+    {
+      "id": 6,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 106,
+        "name": "Dr. Zeynep Öztürk",
+        "specialty": "Nöroloji"
+      },
+      "hospital": {
+        "id": 203,
+        "name": "Hacettepe Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2024-12-20T12:20:00Z",
+      "appointmentDate": "2025-01-30T15:00:00Z"
+    },
+    {
+      "id": 7,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 107,
+        "name": "Dr. Burak Yıldız",
+        "specialty": "Psikiyatri"
+      },
+      "hospital": {
+        "id": 201,
+        "name": "Ankara Şehir Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2024-11-15T13:50:00Z",
+      "appointmentDate": "2025-01-10T13:45:00Z"
+    },
+    {
+      "id": 8,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 108,
+        "name": "Dr. Ebru Şahin",
+        "specialty": "Kadın Doğum"
+      },
+      "hospital": {
+        "id": 202,
+        "name": "Gazi Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2024-10-25T07:45:00Z",
+      "appointmentDate": "2024-12-15T08:00:00Z"
+    },
+    {
+      "id": 9,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 109,
+        "name": "Dr. Murat Aydın",
+        "specialty": "Üroloji"
+      },
+      "hospital": {
+        "id": 203,
+        "name": "Hacettepe Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2024-09-30T10:10:00Z",
+      "appointmentDate": "2024-11-05T14:15:00Z"
+    },
+    {
+      "id": 10,
+      "status": "past",
+      "patientId": 12345,
+      "doctor": {
+        "id": 110,
+        "name": "Dr. Cemre Özkan",
+        "specialty": "KBB"
+      },
+      "hospital": {
+        "id": 201,
+        "name": "Ankara Şehir Hastanesi",
+        "location": "Ankara, Türkiye"
+      },
+      "createdAt": "2024-08-15T14:05:00Z",
+      "appointmentDate": "2024-10-20T12:30:00Z"
+    }
+  ]
+}
+

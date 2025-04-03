@@ -31,6 +31,8 @@ struct ContentView: View {
             VStack {
                 Header()
                 HealthDetails()
+                AppointmentView()
+                Spacer()
             }
         }
     }

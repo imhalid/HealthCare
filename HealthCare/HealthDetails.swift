@@ -29,9 +29,20 @@ struct HealthDetails: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    struct RoundedCorners: Shape {
+        var radius: CGFloat = 16
+        var corners: UIRectCorner = [.topRight, .topLeft]
+        
+        func path(in rect: CGRect) -> Path {
+            let path = UIBezierPath(roundedRect: rect,
+                                    byRoundingCorners: corners,
+                                    cornerRadii: CGSize(width: radius, height: radius))
+            return Path(path.cgPath)
+        }
+    }
 
     var body: some View {
-        ScrollView {
             LazyVGrid(columns: columns, spacing: 8) {
                 // Display basic data with individual colors
                 ForEach(basicData, id: \ .title) { item in
@@ -48,9 +59,6 @@ struct HealthDetails: View {
                                     .fontWeight(.medium)
                                 
                             }.padding(5)
-                            ZStack {
-                                Image(systemName: "arrow.up.right.circle.fill")
-                                    .offset(x: 70, y: -10)
                         HStack(alignment: .firstTextBaseline) {
                             Text(item.value)
                                 .fontWeight(.bold)
@@ -69,15 +77,23 @@ struct HealthDetails: View {
                                 endPoint: .topTrailing
                             )
                         )
-                        
-                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                            }
-                        }.padding(.horizontal, 3)
-                            .padding(.vertical, 3)
-                            .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        .clipShape(
+                            RoundedCorners(radius: 16, corners: [.bottomLeft, .topRight])
+                        )
+                        .clipShape(
+                            RoundedCorners(radius: 8, corners: [.bottomRight, .topLeft])
+                        )
+                        .overlay {
+                            Image(systemName: "chevron.right")
+                                .frame(
+                                    maxWidth: .infinity,
+                                    maxHeight: .infinity,
+                                    alignment: .trailing
                                 )
+                                .padding()
+                                .foregroundStyle(colorForBasic(item.title))
+                        }
+                        }
                     }.padding(2)
                 }
             }
@@ -102,8 +118,9 @@ struct HealthDetails: View {
                     }
                 }
                 .padding()
+                .frame(height: 100)
             }
-        }
+        
     }
 
     func colorForBasic(_ title: String) -> Color {
@@ -138,6 +155,5 @@ struct HealthDetails: View {
 }
 
 #Preview {
-    HealthDetails()
-        
+    HealthDetails()  
 }

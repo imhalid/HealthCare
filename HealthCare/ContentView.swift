@@ -29,10 +29,13 @@ struct ContentView: View {
             Color(hex: "#f5f5f5")
                 .ignoresSafeArea()
             VStack {
-                Header()
-                HealthDetails()
-                AppointmentView()
-                Spacer()
+                ScrollView(showsIndicators: false) {
+                    Header()
+                    HealthDetails()
+                    AppointmentView()
+                    Spacer()
+                }
+               
             }
         }
     }

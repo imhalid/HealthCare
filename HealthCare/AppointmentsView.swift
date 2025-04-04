@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppointmentView: View {
     @StateObject private var viewModel = AppointmentViewModel()
-    @State private var selectedTab: String = "upcoming"
+    @State private var selectedTab: String = "all"
     @State private var sortOption: String = "date"
 
     var body: some View {
@@ -18,18 +18,35 @@ struct AppointmentView: View {
             HStack {
                 Button(action: {
                     withAnimation {
+                        selectedTab = "all"
+                    }
+                }) {
+                    HStack(spacing: 2) {
+                        Text("All")
+                            .foregroundStyle(selectedTab == "all" ? .white : .blue)
+                        Text("(\(viewModel.appointments.count))")
+                            .font(.caption)
+                            .foregroundColor(selectedTab == "all" ? .white : .blue)
+                    }
+                    .padding(8)
+                    .background(selectedTab == "all" ? Color.blue : Color.clear)
+                    .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    withAnimation {
                         selectedTab = "upcoming"
                     }
                 }) {
-                    VStack(spacing: 2) {
+                    HStack(spacing: 2) {
                         Text("Upcoming")
-                            .fontWeight(selectedTab == "upcoming" ? .bold : .regular)
+                            .foregroundStyle(selectedTab == "upcoming" ? .white : .blue)
                         Text("(\(viewModel.appointments.filter { $0.status == "upcoming" }.count))")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(selectedTab == "upcoming" ? .white : .blue)
                     }
                     .padding(8)
-                    .background(selectedTab == "upcoming" ? Color.blue.opacity(0.2) : Color.clear)
+                    .background(selectedTab == "upcoming" ? Color.blue : Color.clear)
                     .cornerRadius(8)
                 }
                 
@@ -38,32 +55,41 @@ struct AppointmentView: View {
                         selectedTab = "past"
                     }
                 }) {
-                    VStack(spacing: 2) {
+                    HStack(spacing: 2) {
                         Text("Past")
-                            .fontWeight(selectedTab == "past" ? .bold : .regular)
+                            .foregroundStyle(selectedTab == "past" ? .white : .blue)
                         Text("(\(viewModel.appointments.filter { $0.status == "past" }.count))")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(selectedTab == "past" ? .white : .blue)
                     }
                     .padding(8)
-                    .background(selectedTab == "past" ? Color.blue.opacity(0.2) : Color.clear)
+                    .background(selectedTab == "past" ? Color.blue : Color.clear)
                     .cornerRadius(8)
                 }
+                
+                
                 Spacer()
             }
             .padding()
 
             // Animated appointment list view based on selected tab
             ZStack {
-                if selectedTab == "upcoming" {
-                    AppointmentListView(title: "Upcoming Appointments",
-                                        appointments: viewModel.appointments.filter { $0.status == "upcoming" })
-                    .transition(.move(edge: .leading))
-                } else {
-                    AppointmentListView(title: "Past Appointments",
-                                        appointments: viewModel.appointments.filter { $0.status == "past" })
-                    .transition(.move(edge: .trailing))
+                Group {
+                    if selectedTab == "upcoming" {
+                        AppointmentListView(title: "Upcoming Appointments",
+                                            appointments: viewModel.appointments.filter { $0.status == "upcoming" })
+                    } else if selectedTab == "past" {
+                        AppointmentListView(title: "Past Appointments",
+                                            appointments: viewModel.appointments.filter { $0.status == "past" })
+                    } else {
+                        AppointmentListView(
+                            title: "All",
+                            appointments: viewModel.appointments
+                                .sorted(by: { $0.appointmentDateFormatted ?? Date() > $1.appointmentDateFormatted ?? Date() }))
+                    }
                 }
+                .transition(.identity)
+                .id(selectedTab) // force transition by changing view identity
             }
             .animation(.easeInOut, value: selectedTab)
         }
@@ -75,14 +101,12 @@ struct AppointmentListView: View {
     let appointments: [Appointment]
 
     var body: some View {
-        ScrollView {
             LazyVStack(alignment:.leading, spacing: 10) {
                 ForEach(appointments) { appointment in
                     AppointmentCardView(appointment: appointment)
                 }
             }
             .padding()
-        }
     }
 }
 
@@ -90,26 +114,51 @@ struct AppointmentCardView: View {
     let appointment: Appointment
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("\(appointment.doctor.name) - \(appointment.doctor.specialty)")
-                    .font(.headline)
-                
-                Text(appointment.hospital.name)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                if let date = appointment.appointmentDateFormatted {
-                    Text("Date: \(date, style: .date) \(date, style: .time)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
+        
+        ZStack {
+            Rectangle()
+                .zIndex(1)
+                .foregroundStyle(
+                    appointment.status == "upcoming" ? LinearGradient(
+                        colors: [.blue.opacity(0.1), .clear],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ) : LinearGradient(
+                        colors: [.gray.opacity(0.1), .clear],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            HStack {
+                Rectangle()
+                    .foregroundStyle(appointment.status == "upcoming" ? Color.blue : Color.gray)
+                    .blur(radius: 1)
+                    .frame(width: 5, height: 100)
                     
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("\(appointment.doctor.name) - \(appointment.doctor.specialty)")
+                        .font(.headline)
+                    
+                    Text(appointment.hospital.name)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    if let date = appointment.appointmentDateFormatted {
+                        Text("Date: \(date, style: .date) \(date, style: .time)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                }
+                
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
             .background(Color(.systemBackground))
-            .cornerRadius(10)
-            .shadow(radius: 3)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .clipped()
+            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
             
         }
     }

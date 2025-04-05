@@ -24,6 +24,7 @@ extension View {
 }
 
 struct Header: View {
+    let onGearTap: () -> Void
     var body: some View {
         HStack {
             Image(systemName: "person")
@@ -41,6 +42,7 @@ struct Header: View {
             HStack{
                 Image(systemName: "bell")
                     .iconStyle()
+                
                 Image(systemName: "gearshape")
                     .resizable()
                     .scaledToFit()
@@ -48,11 +50,18 @@ struct Header: View {
                     .imageScale(.large)
                     .padding(10)
                     .foregroundStyle(.black)
+                    .zIndex(5)
+                    .onTapGesture {
+                        withAnimation {
+                            onGearTap()
+                        }
+                            }
             }
         }.padding()
+            
     }
 }
 
 #Preview {
-    Header()
+    Header(onGearTap: { })
 }

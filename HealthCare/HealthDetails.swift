@@ -46,7 +46,6 @@ struct HealthDetails: View {
             LazyVGrid(columns: columns, spacing: 8) {
                 // Display basic data with individual colors
                 ForEach(basicData, id: \ .title) { item in
-                    ZStack {
                         VStack(alignment: .leading) {
                             HStack {
                                 Image(systemName: iconForBasic(item.title))
@@ -96,7 +95,6 @@ struct HealthDetails: View {
                         }
                     }.padding(2)
                 }
-            }
             .padding()
             
             ScrollView(.horizontal, showsIndicators: false) {

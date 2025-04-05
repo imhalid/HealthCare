@@ -70,7 +70,7 @@ struct AppointmentView: View {
                 
                 Spacer()
             }
-            .padding()
+            .padding(.horizontal)
 
             // Animated appointment list view based on selected tab
             ZStack {
@@ -106,7 +106,7 @@ struct AppointmentListView: View {
                     AppointmentCardView(appointment: appointment)
                 }
             }
-            .padding()
+            .padding(.horizontal)
     }
 }
 

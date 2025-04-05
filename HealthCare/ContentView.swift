@@ -11,7 +11,6 @@ extension Color {
     init(hex: String) {
         var cleanHexCode = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         cleanHexCode = cleanHexCode.replacingOccurrences(of: "#", with: "")
-        print(cleanHexCode)
         var rgb: UInt64 = 0
         
         Scanner(string: cleanHexCode).scanHexInt64(&rgb)
@@ -24,18 +23,25 @@ extension Color {
 }
 
 struct ContentView: View {
+    @State private var showMenu: Bool = false
     var body: some View {
         ZStack {
             Color(hex: "#f5f5f5")
                 .ignoresSafeArea()
+                           MenuView()
+                .offset(x: showMenu ? 0 : -UIScreen.main.bounds.width, y: 0)
+                               .zIndex(2)
             VStack {
                 ScrollView(showsIndicators: false) {
-                    Header()
+                    Header(onGearTap: {
+                                            withAnimation(.easeInOut) {
+                                                showMenu.toggle()
+                                            }
+                                        })
                     HealthDetails()
                     AppointmentView()
                     Spacer()
                 }
-               
             }
         }
     }
